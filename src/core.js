@@ -1,5 +1,5 @@
 // core.js — grid builder, level loader and player physics.
-// Pure logic (no DOM) so the node validator can run the exact same simulation as the game.
+// Pure logic (no DOM).
 (function (root) {
   const TS = 16, GRAV = 0.33, MAXF = 4.6, SPD = 1.55, PW = 10, PH = 14;
 
@@ -154,12 +154,10 @@
     }
   }
 
-  const Core_pad = { v: 0 };  // validator-only: fattens hazard hitboxes to prove stages aren't frame-perfect
   // spikes + out of world
   function hazardHit(P, L) {
-    const pad = Core_pad.v;
     if (P.y > L.h * TS + 6 || P.y + P.h < -6) return true;
-    const px0 = P.x + 1 - pad, px1 = P.x + P.w - 1 + pad, py0 = P.y + 1 - pad, py1 = P.y + P.h - 1 + pad;
+    const px0 = P.x + 1, px1 = P.x + P.w - 1, py0 = P.y + 1, py1 = P.y + P.h - 1;
     const x0 = Math.floor(px0 / TS), x1 = Math.floor(px1 / TS);
     const y0 = Math.floor(py0 / TS), y1 = Math.floor(py1 / TS);
     for (let ty = y0; ty <= y1; ty++) for (let tx = x0; tx <= x1; tx++) {
@@ -178,6 +176,6 @@
     return P.x + P.w > e.x + 3 && P.x < e.x + 13 && P.y + P.h > e.y && P.y < e.y + TS;
   }
 
-  root.Core = { pad: Core_pad, TS, GRAV, MAXF, SPD, PW, PH, Grid, loadLevel, newPlayer, stepPlayer, hazardHit, touchExit };
+  root.Core = { TS, GRAV, MAXF, SPD, PW, PH, Grid, loadLevel, newPlayer, stepPlayer, hazardHit, touchExit };
   if (typeof module !== 'undefined') module.exports = root.Core;
 })(typeof window !== 'undefined' ? window : globalThis);

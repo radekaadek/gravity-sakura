@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>Gravity Sakura - ぐらびてぃ さくら</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<style>
+  :root { --px: 3px; }
+  html, body { margin: 0; height: 100%; background: #0b0614; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+  body { display: flex; align-items: center; justify-content: center; }
+  #wrap { position: relative; line-height: 0; box-shadow: 0 0 40px rgba(255, 140, 195, .18); }
+  canvas { image-rendering: pixelated; image-rendering: crisp-edges; display: block; background: #000; }
+  .scan #wrap::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0, rgba(0,0,0,.22) calc(var(--px) * .45), transparent calc(var(--px) * .45), transparent var(--px)); }
+  #touch { display: none; }
+  @media (pointer: coarse) {
+    #touch { display: block; position: fixed; inset: 0; pointer-events: none; }
+    #touch button { pointer-events: auto; position: absolute; width: 74px; height: 74px; border-radius: 50%; border: 3px solid rgba(255,255,255,.55);
+      background: rgba(255,140,195,.28); color: #fff; font: bold 20px monospace; touch-action: none; }
+    #touch button.on { background: rgba(255,210,63,.5); }
+    #touch [data-btn=left] { left: 14px; bottom: 22px; } #touch [data-btn=right] { left: 104px; bottom: 22px; }
+    #touch [data-btn=flip] { right: 14px; bottom: 60px; width: 92px; height: 92px; } #touch [data-btn=shoot] { right: 112px; bottom: 14px; }
+  }
+</style>
+</head>
+<body>
+<div id="wrap"><canvas id="c" width="320" height="180"></canvas></div>
+<div id="touch">
+  <button data-btn="left">&lt;</button><button data-btn="right">&gt;</button>
+  <button data-btn="flip">FLIP</button><button data-btn="shoot">SHOT</button>
+</div>
